@@ -1,0 +1,33 @@
+# --- Binários e Pastas de Build ---
+target/
+build/
+bin/
+out/
+.gradle/
+.settings/
+
+# --- IDEs (Configurações locais) ---
+.idea/
+.vscode/
+.project
+.classpath
+.factorypath
+*.iml
+*.iws
+
+# --- Logs e Arquivos temporários ---
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+
+# --- Variáveis de Ambiente e Segredos (CRÍTICO) ---
+# Jamais versionar dados de conexão sensíveis
+.env
+.env.local
+.env.*.local
+
+# --- Arquivos específicos do OS ---
+Thumbs.db
+ehthumbs.db
