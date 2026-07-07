@@ -21,7 +21,11 @@ public class GastoController {
 
     @PostMapping
     public ResponseEntity<Gasto> criar(@RequestBody GastoDTO dto) {
-        Gasto gasto = new Gasto(dto.descricao(), dto.valor(), dto.data());
+
+        // Adicione este log para ver o que está chegando
+        System.out.println("JSON Recebido: " + dto);         
+        
+        Gasto gasto = new Gasto(dto.categoria(), dto.valor(), dto.descricao(), dto.data());
         Gasto salvo = repository.save(gasto);
         return ResponseEntity.ok(salvo);
     }
