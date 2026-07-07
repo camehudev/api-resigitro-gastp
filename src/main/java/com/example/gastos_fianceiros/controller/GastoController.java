@@ -1,8 +1,12 @@
 package com.example.gastos_fianceiros.controller;
 
+import com.example.gastos_fianceiros.DTO.CategoriaSomaDTO;
 import com.example.gastos_fianceiros.DTO.GastoDTO;
+import com.example.gastos_fianceiros.application.service.GastoService;
 import com.example.gastos_fianceiros.domain.model.Gasto;
 import com.example.gastos_fianceiros.infrastructure.repository.GastoRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,9 @@ import java.util.List;
 public class GastoController {
 
     private GastoRepository repository;
+    
+    @Autowired
+    private GastoService service;
 
     // Injeção de dependência via construtor
     public GastoController(GastoRepository repository) {
@@ -33,5 +40,10 @@ public class GastoController {
     @GetMapping
     public List<Gasto> listar() {
         return repository.findAll();
+    }
+
+    @GetMapping("/resumo")
+    public List<CategoriaSomaDTO> resumo() {
+        return service.obterResumoPorCategoria();
     }
 }
