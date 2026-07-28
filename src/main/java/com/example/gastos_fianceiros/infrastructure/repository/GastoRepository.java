@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface GastoRepository extends JpaRepository<Gasto, Long> {
-     @Query("SELECT new com.example.gastos_fianceiros.DTO.CategoriaSomaDTO(g.categoria, SUM(g.valor)) " +
-           "FROM Gasto g GROUP BY g.categoria")
+     @Query("SELECT new com.example.gastos_fianceiros.DTO.CategoriaSomaDTO(UPPER(g.categoria), SUM(g.valor)) " +
+       "FROM Gasto g GROUP BY UPPER(g.categoria)")
     List<CategoriaSomaDTO> somarValoresPorCategoria();
 }
 

@@ -42,7 +42,7 @@ public class GastoController {
         return repository.findAll();
     }
 
-    @GetMapping("/resumo")
+    @GetMapping("resumo")
     public List<CategoriaSomaDTO> resumo() {
         return service.obterResumoPorCategoria();
     }

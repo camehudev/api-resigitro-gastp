@@ -33,7 +33,7 @@ public class AutenticacaoService {
         // }
 
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
-        Usuario novoUsuario = new Usuario(null, dto.email(), senhaCriptografada);
+        Usuario novoUsuario = new Usuario(null, dto.nome(), dto.email(), senhaCriptografada);
         usuarioRepository.save(novoUsuario);
     }
 

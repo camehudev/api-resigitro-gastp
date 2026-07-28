@@ -17,6 +17,7 @@ public class GastoService {
 
 
     public List<CategoriaSomaDTO> obterResumoPorCategoria() {
+
         return repository.somarValoresPorCategoria();
     }
 

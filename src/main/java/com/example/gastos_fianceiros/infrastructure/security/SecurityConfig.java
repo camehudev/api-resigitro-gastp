@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,40 +24,35 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
-    private JwtTokenFilter jwtTokenFilter;
+    private JwtTokenFilter jwtTokenFilter; // Nome correto injetado
 
-    @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            return http
-                    .cors(Customizer.withDefaults())
-                    .csrf(csrf -> csrf.disable()) // <--- ESSIDIAL: Desativa o CSRF para APIs REST
-                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .authorizeHttpRequests(authorize -> authorize
-                            // Libera explicitamente as rotas de autenticação e registo
-                            .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                            // Qualquer outra rota exige autenticação via Token JWT
-                            .anyRequest().authenticated()
-                    )
-                    .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                    .build();
-        }
+   
+@Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            // Ativa o CORS utilizando o bean corsConfigurationSource abaixo
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**").permitAll() // Rotas públicas de login
+                .requestMatchers("/api/usuarios/**").permitAll() // Correção: uso de /** e remoção do rótulo
+                .requestMatchers("/gastos/**").permitAll() // Correção: uso de /** e remoção do rótulo
+                .anyRequest().authenticated()          // Demais rotas exigem JWT
+            )
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            // Correção: remoção do rótulo "beforeFilter:"
+            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+            
+        return http.build();
+    }
 
-    // Bean para definir quais origens, métodos e headers são permitidos
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Libera para qualquer origem usando padrão de asterisco seguro
         configuration.setAllowedOriginPatterns(List.of("*")); 
-        
-        // Métodos HTTP permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        
-        // Cabeçalhos permitidos (incluindo o Authorization para o JWT)
         configuration.setAllowedHeaders(List.of("*"));
-        
-        // Permite o envio de credenciais (como tokens de autorização e cookies)
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
