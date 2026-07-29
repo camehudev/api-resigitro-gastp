@@ -32,14 +32,12 @@ public class AuthController {
         return ResponseEntity.ok(tokenDTO);
     }
 
-    @GetMapping("/check-session")
+   @GetMapping("/check-session")
     public ResponseEntity<Boolean> checkSession(HttpServletRequest request) {
-        boolean isValid = autenticacaoService.isCookieSessionValid(request);
+        boolean isValid = autenticacaoService.isValidToken(request);
         
-        if (isValid) {
-            return ResponseEntity.ok(true);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
-        }
+        // Retorna 200 OK com true se o token for válido, ou false se expirou/não existe,
+        // mantendo o console do front-end limpo de erros HTTP 403.
+        return ResponseEntity.ok(isValid);
     }
 }
