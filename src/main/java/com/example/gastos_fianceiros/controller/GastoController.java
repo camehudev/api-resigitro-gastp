@@ -37,7 +37,7 @@ public class GastoController {
         return ResponseEntity.ok(salvo);
     }
 
-    @GetMapping 
+    @GetMapping
     public List<Gasto> listar() {
         return repository.findAll();
     }
