@@ -35,8 +35,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll() // Rotas públicas de login
-                //.requestMatchers("/api/usuarios/**").permitAll() // Correção: uso de /** e remoção do rótulo
-                //.requestMatchers("/gastos/**").permitAll() // Correção: uso de /** e remoção do rótulo
+                .requestMatchers("/api/usuarios/**").permitAll() // Correção: uso de /** e remoção do rótulo
+                .requestMatchers("/gastos/**").permitAll() // Correção: uso de /** e remoção do rótulo
                 .anyRequest().authenticated()          // Demais rotas exigem JWT
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
