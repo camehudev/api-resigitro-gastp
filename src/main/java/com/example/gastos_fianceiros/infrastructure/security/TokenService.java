@@ -24,8 +24,8 @@ public class TokenService {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 horas de validade
-                //.expiration(new Date(System.currentTimeMillis()  + 1000 * 60 * 10)) // 10 minutos de validade
+                //.expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 horas de validade
+                .expiration(new Date(System.currentTimeMillis()  + 1000 * 60 * 10)) // 10 minutos de validade
                 // Onde você define a expiração do token (Ex: no TokenService.java)
                 .signWith(getSigningKey())
                 .compact();
