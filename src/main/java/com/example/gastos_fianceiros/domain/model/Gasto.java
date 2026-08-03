@@ -23,17 +23,21 @@ public class Gasto {
     private String descricao;
 
     @Column(nullable = true)
-    private LocalDate data;
+    private LocalDate data_gasto;
+
+    @Column(nullable = true)
+    private LocalDate data_criacao;
 
     // Adicione este construtor
     protected Gasto() { }
 
 
-    public Gasto(String categoria, String valor, String descricao, LocalDate data) {
+    public Gasto(String categoria, String valor, String descricao, String data) {
         this.categoria = categoria;
         this.valor = valor;
         this.descricao = descricao;
-        this.data = data;
+        this.data_gasto = data != null ? LocalDate.parse(data) : null;
+        this.data_criacao = LocalDate.now(); // Define a data de criação como a data atual
     }
 
     // GETTERS E SETTERS SÃO OBRIGATÓRIOS 
@@ -48,6 +52,9 @@ public class Gasto {
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public LocalDate getData() { return data; }
-    public void setData(LocalDate data) { this.data = data; }
+    public LocalDate getData() { return data_gasto; }
+    public void setData(String data) { this.data_gasto = LocalDate.parse(data); }
+
+    public LocalDate getDataCriacao() { return data_criacao; }
+    public void setDataCriacao(LocalDate data_criacao) { this.data_criacao = data_criacao; }
 }

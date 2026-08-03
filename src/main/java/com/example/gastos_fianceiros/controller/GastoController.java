@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class GastoController {
         // Adicione este log para ver o que está chegando
         System.out.println("JSON Recebido: " + dto);         
         
-        Gasto gasto = new Gasto(dto.categoria(), dto.valor(), dto.descricao(), dto.data());
+        Gasto gasto = new Gasto(dto.categoria(), dto.valor(), dto.descricao(), dto.data_gasto());
         Gasto salvo = repository.save(gasto);
         return ResponseEntity.ok(salvo);
     }
