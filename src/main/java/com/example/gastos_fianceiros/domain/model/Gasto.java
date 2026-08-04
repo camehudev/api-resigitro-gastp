@@ -19,6 +19,12 @@ public class Gasto {
     @Column(nullable = false, precision = 19, scale = 2)
     private String valor;
 
+     @Column(nullable = false)
+    private String parcela_atual;
+
+    @Column(nullable = false)
+    private String total_parcelas;
+
     @Column(nullable = false)
     private String descricao;
 
@@ -35,6 +41,8 @@ public class Gasto {
     public Gasto(String categoria, String valor, String descricao, String data) {
         this.categoria = categoria;
         this.valor = valor;
+        this.total_parcelas = total_parcelas;
+        this.parcela_atual = parcela_atual;
         this.descricao = descricao;
         this.data_gasto = data != null ? LocalDate.parse(data) : null;
         this.data_criacao = LocalDate.now(); // Define a data de criação como a data atual
@@ -48,6 +56,13 @@ public class Gasto {
 
     public String getValor() { return valor; }
     public void setValor(String valor) { this.valor = valor; }
+
+    public String getTotalParcelas() { return total_parcelas; }
+    public void setTotalParcelas(String totalParcelas) { this.total_parcelas = totalParcelas; }
+
+    public String getParcelaAtual() { return parcela_atual; }
+    public void setParcelaAtual(String parcela_atual) { this.parcela_atual = parcela_atual; }
+
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }

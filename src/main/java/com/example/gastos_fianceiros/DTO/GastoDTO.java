@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public record GastoDTO(
     String categoria,
     String valor,
+    String parcela_atual,
+    String total_parcelas,
     String descricao,
     String data_gasto,
     String data_criacao,

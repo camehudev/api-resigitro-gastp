@@ -1,0 +1,79 @@
+package com.example.gastos_fianceiros.application.service;
+
+import com.example.gastos_fianceiros.DTO.ReceitaDTO;
+import com.example.gastos_fianceiros.domain.model.Receitas;
+import com.example.gastos_fianceiros.infrastructure.repository.ReceitaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ReceitaService {
+
+    @Autowired
+    private ReceitaRepository receitaRepository;
+
+    // 1. GET: Listar todas as receitas convertidas para DTO
+    public List<ReceitaDTO> listarTodasReceitas() {
+        List<Receitas> receitas = receitaRepository.findAll();
+        return receitas.stream()
+                .map(this::converterParaDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 2. GET: Buscar por ID
+    public ReceitaDTO buscarReceitaId(Long id) {
+        Receitas receita = receitaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Receita não encontrada com o ID: " + id));
+        return converterParaDTO(receita);
+    }
+
+    // 3. POST: Salvar uma nova receita
+    public ReceitaDTO salvarReceita(ReceitaDTO receitaDTO) {
+        Receitas receita = converterParaEntidade(receitaDTO);
+        Receitas salva = receitaRepository.save(receita);
+        return converterParaDTO(salva);
+    }
+
+    // 4. UPDATE: Atualizar uma receita existente
+    public ReceitaDTO atualizarReceita(Long id, ReceitaDTO receitaDTO) {
+        Receitas existente = receitaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Receita não encontrada para atualização com ID: " + id));
+        
+        existente.setNome(receitaDTO.getNome());
+        existente.setValor(receitaDTO.getValor());
+        existente.setData(receitaDTO.getData());
+
+        Receitas atualizada = receitaRepository.save(existente);
+        return converterParaDTO(atualizada);
+    }
+
+    // 5. DELETE: Excluir uma receita
+    public void deletarReceita(Long id) {
+        if (!receitaRepository.existsById(id)) {
+            throw new RuntimeException("Não foi possível excluir. Receita não encontrada com ID: " + id);
+        }
+        receitaRepository.deleteById(id);
+    }
+
+    // Métodos auxiliares de conversão corrigidos para suportar o ID
+    private ReceitaDTO converterParaDTO(Receitas receita) {
+        return new ReceitaDTO(
+                receita.getId(), // Incluído o ID para retornar o objeto completo ao frontend
+                receita.getNome(),
+                receita.getValor(),
+                receita.getData()
+        );
+    }
+
+    private Receitas converterParaEntidade(ReceitaDTO dto) {
+        Receitas receita = new Receitas();
+        receita.setId(dto.getId());
+        receita.setNome(dto.getNome());
+        receita.setValor(dto.getValor());
+        receita.setData(dto.getData());
+        return receita;
+    }
+}
