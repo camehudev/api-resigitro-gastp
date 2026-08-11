@@ -6,7 +6,8 @@ import java.sql.Date;
 public class ReceitaDTO {
 
     private Long id;
-    private String nome;
+    private String categoria;
+    private String descricao;
     private BigDecimal valor;
     private Date data;
 
@@ -15,16 +16,18 @@ public class ReceitaDTO {
     }
 
     // <-- ADICIONE ESTE CONSTRUTOR PARA RESOLVER O ERRO IMEDIATAMENTE -->
-    public ReceitaDTO(String nome, BigDecimal valor, Date data) {
-        this.nome = nome;
+    public ReceitaDTO(String categoria,String descricao, BigDecimal valor, Date data) {
+        this.categoria= categoria;
+        this.descricao= descricao;
         this.valor = valor;
         this.data = data;
     }
 
     // Construtor completo com ID
-    public ReceitaDTO(Long id, String nome, BigDecimal valor, Date data) {
+    public ReceitaDTO(Long id,String categoria,String descricao, BigDecimal valor, Date data) {
         this.id = id;
-        this.nome = nome;
+        this.categoria = categoria;
+        this.descricao= descricao;
         this.valor = valor;
         this.data = data;
     }
@@ -38,12 +41,20 @@ public class ReceitaDTO {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getDescricao() {
+        return categoria;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public BigDecimal getValor() {
@@ -61,4 +72,6 @@ public class ReceitaDTO {
     public void setData(Date data) {
         this.data = data;
     }
+
+   
 }

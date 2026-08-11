@@ -21,8 +21,13 @@ public class Receitas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome; // Removido o unique=true para permitir nomes repetidos em meses diferentes
+   // Coluna 1: Categoria
+    @Column(name = "categoria", nullable = false)
+    private String categoria;
+
+    // Coluna 2: Descrição
+    @Column(name = "descricao")
+    private String descricao;
 
     @Column(nullable = false)
     private BigDecimal valor; // Alterado para BigDecimal e minúsculo (boa prática)

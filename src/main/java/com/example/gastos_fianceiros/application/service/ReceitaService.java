@@ -42,7 +42,8 @@ public class ReceitaService {
         Receitas existente = receitaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Receita não encontrada para atualização com ID: " + id));
         
-        existente.setNome(receitaDTO.getNome());
+        existente.setCategoria(receitaDTO.getCategoria());
+        existente.setDescricao(receitaDTO.getDescricao());
         existente.setValor(receitaDTO.getValor());
         existente.setData(receitaDTO.getData());
 
@@ -62,7 +63,8 @@ public class ReceitaService {
     private ReceitaDTO converterParaDTO(Receitas receita) {
         return new ReceitaDTO(
                 receita.getId(), // Incluído o ID para retornar o objeto completo ao frontend
-                receita.getNome(),
+                receita.getCategoria(),
+                receita.getDescricao(),                
                 receita.getValor(),
                 receita.getData()
         );
@@ -71,7 +73,8 @@ public class ReceitaService {
     private Receitas converterParaEntidade(ReceitaDTO dto) {
         Receitas receita = new Receitas();
         receita.setId(dto.getId());
-        receita.setNome(dto.getNome());
+        receita.setCategoria(dto.getCategoria());
+        receita.setDescricao(dto.getDescricao());
         receita.setValor(dto.getValor());
         receita.setData(dto.getData());
         return receita;
