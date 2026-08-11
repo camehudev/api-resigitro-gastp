@@ -40,7 +40,7 @@ public class GastoController {
 
     @GetMapping
     public List<Gasto> listar() {
-        return repository.findAll();
+        return repository.findAllByOrderByIdDesc();
     }
 
     @GetMapping("/resumo")

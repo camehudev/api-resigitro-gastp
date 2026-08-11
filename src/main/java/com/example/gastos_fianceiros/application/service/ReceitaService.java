@@ -17,7 +17,7 @@ public class ReceitaService {
 
     // 1. GET: Listar todas as receitas convertidas para DTO
     public List<ReceitaDTO> listarTodasReceitas() {
-        List<Receitas> receitas = receitaRepository.findAll();
+        List<Receitas> receitas = receitaRepository.findAllByOrderByIdDesc();
         return receitas.stream()
                 .map(this::converterParaDTO)
                 .collect(Collectors.toList());
