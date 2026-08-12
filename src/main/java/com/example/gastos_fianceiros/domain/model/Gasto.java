@@ -20,10 +20,10 @@ public class Gasto {
     private String valor;
 
      @Column(nullable = false)
-    private String parcela_atual;
+    private int parcela_atual;
 
     @Column(nullable = false)
-    private String total_parcelas;
+    private int total_parcelas;
 
     @Column(nullable = false)
     private String descricao;
@@ -57,11 +57,11 @@ public class Gasto {
     public String getValor() { return valor; }
     public void setValor(String valor) { this.valor = valor; }
 
-    public String getTotalParcelas() { return total_parcelas; }
-    public void setTotalParcelas(String totalParcelas) { this.total_parcelas = totalParcelas; }
+    public int getTotalParcelas() { return total_parcelas; }
+    public void setTotalParcelas(int totalParcelas) { this.total_parcelas = totalParcelas; }
 
-    public String getParcelaAtual() { return parcela_atual; }
-    public void setParcelaAtual(String parcela_atual) { this.parcela_atual = parcela_atual; }
+    public int getParcelaAtual() { return parcela_atual; }
+    public void setParcelaAtual(int parcela_atual) { this.parcela_atual = parcela_atual; }
 
 
     public String getDescricao() { return descricao; }
