@@ -5,15 +5,19 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public record GastoDTO(
+    Long id,
     String categoria,
+    BigDecimal valor,
+    String descricao,
     
-    // CORRIGIDO: Alterado de String para BigDecimal para bater com a Entidade e o Banco
-    BigDecimal valor,    
-    Integer parcela_atual,
-    Integer total_parcelas,
-    String descricao,    
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate data_gasto,    
+    LocalDate dataGasto,
+    
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate data_criacao
-) {}
+    LocalDate dataCriacao,
+    
+    Integer totalParcelas,
+    Integer parcelaAtual
+) {
+
+    }

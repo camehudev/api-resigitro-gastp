@@ -29,12 +29,14 @@ public class GastoController {
         System.out.println("Método criar acionado com sucesso: " + dto);
 
         Gasto gasto = new Gasto(
-            dto.categoria(),
-            dto.data_gasto(),
+            dto.categoria(),           
             dto.valor(),
-            dto.total_parcelas(),
-            dto.parcela_atual(),
-            dto.descricao()
+            dto.descricao(),
+            dto.dataGasto(),
+            dto.dataCriacao(),           
+            dto.totalParcelas(),
+            dto.parcelaAtual()
+           
         );
 
         Gasto salvo = repository.save(gasto);
