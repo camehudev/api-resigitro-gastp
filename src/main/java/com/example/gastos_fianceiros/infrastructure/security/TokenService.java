@@ -21,6 +21,8 @@ public class TokenService {
     }
 
     public String gerarToken(String username) {
+
+       System.out.println(username);
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())

@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -128,12 +130,26 @@ public class AutenticacaoService {
     }
 
     public TokenDTO login(LoginDTO dto) {
+    // 1. Cria o token com as credenciais brutas (Authenticated = false)
+    var usernamePassword = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());
+   
+    // 2. O AuthenticationManager valida as credenciais. 
+    // Se estiver tudo correto, 'auth' retorna preenchido e com Authenticated = true.
+    // Se a senha estiver errada ou o e-mail não existir, ele lança BadCredentialsException automaticamente.
+    var auth = this.authenticationManager.authenticate(usernamePassword);
      
-        var usernamePassword = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        // O principal será o e-mail ou o objeto do usuário autenticado
-        String token = tokenService.gerarToken(dto.email());
-        return new TokenDTO(token);
-    }
+    // 3. Opcional, mas recomendado: Define a autenticação no contexto atual do Spring Security
+    SecurityContextHolder.getContext().setAuthentication(auth);
+
+    // 4. Extrai o usuário autenticado de dentro do objeto 'auth' retornado
+    var usuario = (UserDetails) auth.getPrincipal();
+
+
+    // 5. Gera o token utilizando o e-mail ou username oficial recuperado do banco
+    String token = tokenService.gerarToken(usuario.getUsername());    
+
+    // 6. Retorna o DTO contendo o JWT
+    return new TokenDTO(token);
+}
 }
