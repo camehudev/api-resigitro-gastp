@@ -1,64 +1,50 @@
 package com.example.gastos_fianceiros.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "gastos")
+@Data
+@NoArgsConstructor
 public class Gasto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "categoria", nullable = false, length = 255)
+    @Column(nullable = false)
     private String categoria;
 
-    @Column(name = "valor", nullable = false, precision = 19, scale = 2)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal valor;
 
-    @Column(name = "descricao", nullable = false, length = 255)
+    @Column(nullable = false)
     private String descricao;
 
     @Column(name = "data_gasto")
     private LocalDate dataGasto;
 
-    // Usando acento no nome da coluna exatamente como você pediu
-    @Column(name = "data_criação")
+    @Column(name = "data_criacao")
     private LocalDate dataCriacao;
 
     @Column(name = "total_parcelas", nullable = false)
-    private int totalParcelas;
+    private Integer totalParcelas;
 
     @Column(name = "parcela_atual", nullable = false)
-    private int parcelaAtual;
+    private Integer parcelaAtual;
 
-    // Construtores, Getters e Setters
-    public Gasto(String string, BigDecimal bigDecimal,String descricao, Object object, LocalDate localDate, Integer integer, Integer integer2) {}
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getCategoria() { return categoria; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
-
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
-
-    public String getDescvricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public LocalDate getDataGasto() { return dataGasto; }
-    public void setDataGasto(LocalDate dataGasto) { this.dataGasto = dataGasto; }
-
-    public LocalDate getDataCriacao() { return dataCriacao; }
-    public void setDataCriacao(LocalDate dataCriacao) { this.dataCriacao = dataCriacao; }
-
-    public int getTotalParcelas() { return totalParcelas; }
-    public void setTotalParcelas(int totalParcelas) { this.totalParcelas = totalParcelas; }
-
-    public int getParcelaAtual() { return parcelaAtual; }
-    public void setParcelaAtual(int parcelaAtual) { this.parcelaAtual = parcelaAtual; }
+    // Construtor exato correspondente à chamada no Controller
+    public Gasto(String categoria, BigDecimal valor, String descricao, LocalDate dataGasto, LocalDate dataCriacao, Integer totalParcelas, Integer parcelaAtual) {
+        this.categoria = categoria;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.dataGasto = dataGasto;
+        this.dataCriacao = dataCriacao;
+        this.totalParcelas = totalParcelas;
+        this.parcelaAtual = parcelaAtual;
+    }
 }

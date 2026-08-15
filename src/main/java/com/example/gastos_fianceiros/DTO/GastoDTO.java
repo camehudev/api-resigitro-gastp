@@ -11,13 +11,13 @@ public record GastoDTO(
     String descricao,
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate dataGasto,
+    LocalDate data_gasto,
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate dataCriacao,
+    LocalDate data_criacao,
     
-    Integer totalParcelas,
-    Integer parcelaAtual
+    Integer total_parcelas,
+    Integer parcela_atual
 ) {
 
     }

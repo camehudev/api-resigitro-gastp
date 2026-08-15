@@ -32,10 +32,10 @@ public class GastoController {
             dto.categoria(),           
             dto.valor(),
             dto.descricao(),
-            dto.dataGasto(),
-            dto.dataCriacao(),           
-            dto.totalParcelas(),
-            dto.parcelaAtual()
+            dto.data_gasto(),
+            dto.data_criacao(),           
+            dto.total_parcelas(),
+            dto.parcela_atual()
            
         );
 
@@ -45,7 +45,7 @@ public class GastoController {
 
     @GetMapping
     public List<Gasto> listar() {       
-        return repository.findAll();
+        return repository.findAllByOrderByIdDesc();
     }
 
     @GetMapping("/resumo")
