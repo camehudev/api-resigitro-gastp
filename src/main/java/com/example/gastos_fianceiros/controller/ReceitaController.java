@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -53,5 +54,13 @@ public class ReceitaController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         receitaService.deletarReceita(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/total")
+    public ResponseEntity<BigDecimal> obterTotalGeralReceitas() {
+        System.out.println("Chamoi aqui");
+        BigDecimal totalGeral = receitaService.obterValorTotalGeralReceitas();
+        return ResponseEntity.ok(totalGeral);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gastos_fianceiros.application.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,12 @@ public class GastoService {
 
     public void salvarGasto(Gasto gasto) {
         repository.save(gasto);
+    }
+
+    public BigDecimal obterValorTotalGeral() {
+        BigDecimal total = repository.somarValorTotalGeral();
+        // Evita retornar null para o frontend caso a tabela esteja vazia
+        return total != null ? total : BigDecimal.ZERO;
     }
 
 }

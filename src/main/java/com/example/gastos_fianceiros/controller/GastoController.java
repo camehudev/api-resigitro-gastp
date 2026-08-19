@@ -9,6 +9,7 @@ import com.example.gastos_fianceiros.infrastructure.repository.GastoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -49,7 +50,13 @@ public class GastoController {
     }
 
     @GetMapping("/resumo")
-    public List<CategoriaSomaDTO> resumo() {
+    public List<CategoriaSomaDTO> resumo() {     
         return service.obterResumoPorCategoria();
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<BigDecimal> obterTotalGeral() {        
+        BigDecimal totalGeral = service.obterValorTotalGeral();
+        return ResponseEntity.ok(totalGeral);
     }
 }

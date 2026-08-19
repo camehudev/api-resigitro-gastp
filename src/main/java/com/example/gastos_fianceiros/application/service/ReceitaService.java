@@ -1,11 +1,14 @@
 package com.example.gastos_fianceiros.application.service;
 
 import com.example.gastos_fianceiros.DTO.ReceitaDTO;
+import com.example.gastos_fianceiros.DTO.ResumoFinanceiroDTO;
 import com.example.gastos_fianceiros.domain.model.Receitas;
+import com.example.gastos_fianceiros.infrastructure.repository.GastoRepository;
 import com.example.gastos_fianceiros.infrastructure.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +17,8 @@ public class ReceitaService {
 
     @Autowired
     private ReceitaRepository receitaRepository;
+    private GastoRepository gastoRepository;
+ 
 
     // 1. GET: Listar todas as receitas convertidas para DTO
     public List<ReceitaDTO> listarTodasReceitas() {
@@ -79,4 +84,41 @@ public class ReceitaService {
         receita.setData(dto.getData());
         return receita;
     }
+
+
+    public BigDecimal obterValorTotalGeralReceitas() {
+        BigDecimal total = receitaRepository.somarValorTotalGeral();
+        // Evita retornar null para o frontend caso a tabela esteja vazia
+        return total != null ? total : BigDecimal.ZERO;
+    }
+
+
+    public void ResumoFinanceiroService(GastoRepository gastoRepository, ReceitaRepository receitaRepository) {
+        this.gastoRepository = gastoRepository;
+        this.receitaRepository = receitaRepository;
+    }
+
+
+    public ResumoFinanceiroDTO obterResumoFinanceiro() {
+        // Busca total de gastos (tratando null caso a tabela esteja vazia)
+        BigDecimal totalGastos = gastoRepository.somarValorTotalGeral();
+        if (totalGastos == null) {
+            totalGastos = BigDecimal.ZERO;
+        }
+
+        // Busca total de receitas (tratando null)
+        BigDecimal totalReceitas = receitaRepository.somarValorTotalGeral();
+        if (totalReceitas == null) {
+            totalReceitas = BigDecimal.ZERO;
+        }
+
+        // Calcula o saldo (Receitas - Gastos)
+        BigDecimal saldo = totalReceitas.subtract(totalGastos);
+
+        return new ResumoFinanceiroDTO(totalReceitas, totalGastos, saldo);
+    }
+
+
+    
+
 }
