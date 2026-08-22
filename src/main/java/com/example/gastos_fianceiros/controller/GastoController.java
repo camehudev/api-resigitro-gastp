@@ -2,6 +2,7 @@ package com.example.gastos_fianceiros.controller;
 
 import com.example.gastos_fianceiros.DTO.CategoriaSomaDTO;
 import com.example.gastos_fianceiros.DTO.GastoDTO;
+import com.example.gastos_fianceiros.DTO.ResumoMensalCategoriaDTO;
 import com.example.gastos_fianceiros.application.service.GastoService;
 import com.example.gastos_fianceiros.domain.model.Gasto;
 import com.example.gastos_fianceiros.infrastructure.repository.GastoRepository;
@@ -58,5 +59,11 @@ public class GastoController {
     public ResponseEntity<BigDecimal> obterTotalGeral() {        
         BigDecimal totalGeral = service.obterValorTotalGeral();
         return ResponseEntity.ok(totalGeral);
+    }
+
+    @GetMapping("/resumo-mensal")
+    public List<ResumoMensalCategoriaDTO> listarResumoMensal() {
+        System.out.println("Chamou o controller");
+        return service.obterResumoMensalPorCategoria();
     }
 }

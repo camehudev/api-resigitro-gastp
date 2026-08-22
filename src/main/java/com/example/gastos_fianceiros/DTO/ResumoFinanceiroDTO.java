@@ -8,3 +8,5 @@ public record ResumoFinanceiroDTO(
     BigDecimal totalGastos,
     BigDecimal saldo
 ) {}
+
+

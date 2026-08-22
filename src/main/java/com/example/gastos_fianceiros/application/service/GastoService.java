@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.gastos_fianceiros.DTO.CategoriaSomaDTO;
+import com.example.gastos_fianceiros.DTO.ResumoMensalCategoriaDTO;
 import com.example.gastos_fianceiros.domain.model.Gasto;
 import com.example.gastos_fianceiros.infrastructure.repository.GastoRepository;
 
@@ -35,6 +36,13 @@ public class GastoService {
         BigDecimal total = repository.somarValorTotalGeral();
         // Evita retornar null para o frontend caso a tabela esteja vazia
         return total != null ? total : BigDecimal.ZERO;
+    }
+
+
+    public List<ResumoMensalCategoriaDTO> obterResumoMensalPorCategoria() {
+        // Aqui você pode adicionar regras de negócio adicionais se necessário 
+        // antes de retornar os dados consolidados do repositório.
+        return repository.obterResumoMensalPorCategoria();
     }
 
 }
