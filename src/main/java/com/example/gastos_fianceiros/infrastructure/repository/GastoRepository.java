@@ -26,14 +26,14 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
         BigDecimal somarValorTotalGeral();
 
         @Query(value = """
-        SELECT 
-            DATE_FORMAT(g.data_gasto, '%Y-%m') AS mes,
-            g.categoria AS categoria,
-            SUM(g.valor) AS total
-        FROM gastos g
-        GROUP BY DATE_FORMAT(g.data_gasto, '%Y-%m'), g.categoria
-        ORDER BY mes ASC
-        """, nativeQuery = true)
+          SELECT 
+              TO_CHAR(g.data_gasto, 'YYYY-MM') AS mes,
+              g.categoria AS categoria,
+              SUM(g.valor) AS total
+          FROM gastos g
+          GROUP BY TO_CHAR(g.data_gasto, 'YYYY-MM'), g.categoria
+          ORDER BY mes ASC
+          """, nativeQuery = true)
          List<ResumoMensalCategoriaDTO> obterResumoMensalPorCategoria();
 }
 

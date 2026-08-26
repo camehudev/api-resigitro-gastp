@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Aplica para todas as rotas da API
                 .allowedOrigins(
                     "https://ui-resqistro-gasto.vercel.app", // URL da sua aplicação na Vercel
-                    "http://localhost:5000"                  // Caso queira testar build local simulando produção
+                    "http://localhost:5000",
+                    "http://localhost:5001"                 // Caso queira testar build local simulando produção
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH") // Métodos permitidos
                 .allowedHeaders("*")
